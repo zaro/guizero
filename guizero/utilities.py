@@ -28,7 +28,7 @@ def auto_pack(self, master, grid, align):
             if align is None:
                 self.grid(row=grid[0], column=grid[1])
             else:
-                if not re.match(r'^[NWES]+$', align.upper()):
+                if not re.match(r'^[nwes]+$', align.lower()):
                     # Conversion to child friendly specifications (diags?)
                     directions = {"top": "N", "bottom": "S", "left": "W", "right": "E"}
                     align_this =  "W" # Default to align left if they didn't specify something valid
@@ -39,7 +39,7 @@ def auto_pack(self, master, grid, align):
                         error_msg = "Invalid align value ('"+ str(align) +"') for " + self.description + "\nShould be: top, bottom, left, right"
                         error_format(error_msg)
                 else:
-                    align_this = align.upper()
+                    align_this = align.lower()
 
 
                 # Place on grid
