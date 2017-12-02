@@ -1,10 +1,10 @@
 from tkinter import Canvas, BOTH, Frame
 
 from . import utilities as utils
-    
+
 class Waffle(Frame):
 
-    def __init__(self, master, height=3, width=3, dim=20, pad=5, color="white", dotty=False, remember=False, grid=None, align=None):    	
+    def __init__(self, master, height=3, width=3, dim=20, pad=5, color="white", dotty=False, remember=False, grid=None, align=None, pack=None):
 
     	# Description of this object (for friendly error messages)
         self.description = "[Waffle] object ("+str(height)+"x"+str(width)+")"
@@ -31,13 +31,13 @@ class Waffle(Frame):
         self.c_height = self.width*(self.dim+self.pad)
         self.c_width = self.width*(self.dim+self.pad)
 
-        # Attempt to create this object                
+        # Attempt to create this object
         try:
             super().__init__(master)
         except AttributeError:
             utils.error_format("Failed to initialise [Waffle] object")
 
-       
+
         # Create an internal canvas
         currx = self.pad
         curry = self.pad
@@ -60,17 +60,17 @@ class Waffle(Frame):
         self.canvas.pack(fill=BOTH, expand=1)
 
 
-        # Pack this box into its layout 
-        utils.auto_pack(self, master, grid, align)
+        # Pack this box into its layout
+        utils.auto_pack(self, master, grid, align, pack)
 
     # Sets the whole screen with dots
     def set_all(self, color):
 
         self.color = str(color)
-        
+
         currx = self.pad
         curry = self.pad
-        
+
         # Draw the pixels on the canvas
         for y in range(self.height):
             for x in range(self.width):
@@ -100,7 +100,7 @@ class Waffle(Frame):
             locate_y = (self.dim + self.pad) * int(y) + self.pad
             if self.dotty == False:
                 self.canvas.create_rectangle(locate_x, locate_y, locate_x+self.dim, locate_y+self.dim, fill=color)
-               
+
             else:
                 self.canvas.create_oval(locate_x, locate_y, locate_x+self.dim, locate_y+self.dim, fill=color)
 
@@ -118,11 +118,8 @@ class Waffle(Frame):
 
     # Returns a 2d list of all colours in the waffle
     def get_all(self):
-        
+
         if self.remember == False:
             utils.error_format("You used get_all() on a [Waffle] which has no memory.\nIf you would like your [Waffle] to remember colors, set remember=True when you create the Waffle")
         else:
             return self.save_colors
-
-
-    

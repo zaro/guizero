@@ -1,14 +1,17 @@
 import re
 # Auto pack or grid position the element
 # INTERNAL ONLY
-def auto_pack(self, master, grid, align):
+def auto_pack(self, master, grid, align, pack):
 
     #print("Master is " + str(type(master)) + " for object " + self.description)
     #print("Grid is " + str(grid))
 
     # If the master widget specifies grid, don't pack, otherwise auto pack
     if master.layout_manager != "grid":
-        self.pack()
+        if pack:
+            self.pack(**pack)
+        else:
+            self.pack()
     else:
 
         # If they failed to specify grid coords

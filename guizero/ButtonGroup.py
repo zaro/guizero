@@ -4,11 +4,11 @@ from . import utilities as utils
 from .Box import Box
 from .RadioButton import RadioButton
 
-    
+
 class ButtonGroup(Frame):
 
-    def __init__(self, master, options, selected, horizontal=False, command=None, grid=None, align=None):  
-              
+    def __init__(self, master, options, selected, horizontal=False, command=None, grid=None, align=None, pack=None):
+
         self.selected = StringVar()
         self.selected.set(str(selected))    # Should be the hidden value not the text
         self.description = "[ButtonGroup] object with selected option \"" + self.selected.get() + "\""
@@ -16,16 +16,16 @@ class ButtonGroup(Frame):
         self.layout_manager = "grid"
 
         # Init the box
-        try:    
+        try:
             super().__init__(master)
         except AttributeError:
-            utils.error_format( self.description + "\n" + 
+            utils.error_format( self.description + "\n" +
             "The first argument was a " + str(type(master)) +". First argument must be [App] or [Box]")
 
         gridx = 0
         gridy = 0
 
-        for button in options:          
+        for button in options:
             rbutton = RadioButton(self, text=str(button[0]), value=str(button[1]), variable=self.selected)
 
             # Add a command if there was one
@@ -45,8 +45,8 @@ class ButtonGroup(Frame):
                 gridy += 1
 
         # Pack the whole button group
-        utils.auto_pack(self, master, grid, align)
-        
+        utils.auto_pack(self, master, grid, align, pack)
+
     # Get selected value
     def get(self):
         return self.selected.get()
@@ -61,9 +61,3 @@ class ButtonGroup(Frame):
         for option in self.options:
             list_of_options.append([option.text, option.value])
         return list_of_options
-        
-        
-
-        
-
-   

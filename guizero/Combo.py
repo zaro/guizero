@@ -2,17 +2,17 @@ from tkinter import OptionMenu, StringVar
 import tkinter as Tk
 
 from . import utilities as utils
-    
+
 class Combo(OptionMenu):
 
-    def __init__(self, master, options, selected=None, command=None, grid=None, align=None):
+    def __init__(self, master, options, selected=None, command=None, grid=None, align=None, pack=None):
 
         # If a command is specified, the function MUST take one positional argument
         # as it will be auto-given the current value of the Combo
         # You can only specify a command for a OptionMenu at init
 
         # Description of this object (for friendly error messages)
-        self.description = "[Combo] object with default selection \"" + str(selected) + "\""    
+        self.description = "[Combo] object with default selection \"" + str(selected) + "\""
 
         # Maintain a list of options (as strings, to avoid problems comparing)
         self.options = [str(x) for x in options]
@@ -24,9 +24,9 @@ class Combo(OptionMenu):
         self.command = command
 
         # Set the first item in the list as default
-        if selected is None and len(options) > 0:                     
+        if selected is None and len(options) > 0:
             self.selected.set( str(options[0]) )
-            
+
         else:
             self.selected.set( str(selected) )
 
@@ -36,12 +36,12 @@ class Combo(OptionMenu):
         except AttributeError:
                 utils.error_format(self.description + "\n" +
                 "No options for [Combo] were provided")
-               
-       
-        # Pack or grid self 
-        utils.auto_pack(self, master, grid, align)
 
-    # Returns currently selected option 
+
+        # Pack or grid self
+        utils.auto_pack(self, master, grid, align, pack)
+
+    # Returns currently selected option
     def get(self):
         return self.selected.get()
 
@@ -57,7 +57,7 @@ class Combo(OptionMenu):
         try:
             self.selected.set( self.options[0] )
         except IndexError:
-            utils.error_format( self.description + "\n" + 
+            utils.error_format( self.description + "\n" +
             "There are no options in the [Combo] box to be selected")
 
     # Add an option to the combo
@@ -65,7 +65,7 @@ class Combo(OptionMenu):
 
         # Add to the internal list
         self.options.append( str(option) )
-        # self.children["menu"].add_command(label=option, command=self.command) 
+        # self.children["menu"].add_command(label=option, command=self.command)
 
         # Delete all options
         menu = self.children["menu"]
@@ -77,11 +77,10 @@ class Combo(OptionMenu):
 
         # Set the new option as selected
         self.selected.set( str(option) )
-        
+
 
     # Clear all options from a combo
     def clear(self):
         self.options = []
         self.children["menu"].delete(0, END)
         self.selected.set("")
-       

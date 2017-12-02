@@ -1,11 +1,11 @@
 from tkinter import Checkbutton, IntVar
 
 from . import utilities as utils
-    
+
 class CheckBox(Checkbutton):
 
-    def __init__(self, master, text, command=None, grid=None, align=None):  
-      
+    def __init__(self, master, text, command=None, grid=None, align=None, pack=None):
+
         self.text = str(text)
         self.description = "[CheckBox] object with text " + self.text
         self.value = IntVar()
@@ -13,11 +13,11 @@ class CheckBox(Checkbutton):
         try:
             super().__init__(master, text=self.text, variable=self.value)
         except AttributeError:
-            utils.error_format( self.description + "\n" + 
+            utils.error_format( self.description + "\n" +
             "The first argument was a " + str(type(master)) +". First argument must be [App] or [Box]")
 
         try:
-            utils.auto_pack(self, master, grid, align)
+            utils.auto_pack(self, master, grid, align, pack)
        	except AttributeError:
             utils.error_format( self.description + "\n" +
             "Could not add to interface - check first argument is [App] or [Box]")
@@ -40,4 +40,4 @@ class CheckBox(Checkbutton):
     def change_text(self, newtext):
         self.text = str(newtext)
         self.config(text=self.text)
-        self.description = "[CheckBox] object with text " + str(self.text) 
+        self.description = "[CheckBox] object with text " + str(self.text)

@@ -1,10 +1,10 @@
 from tkinter import Frame
 
 from . import utilities as utils
-    
+
 class Box(Frame):
 
-    def __init__(self, master, layout="auto", grid=None, align=None):    	
+    def __init__(self, master, layout="auto", grid=None, align=None, pack=None):
 
     	# Description of this object (for friendly error messages)
         self.description = "[Box] object (may also contain other objects)"
@@ -16,6 +16,6 @@ class Box(Frame):
 
         # Store this object's layout manager
         self.layout_manager = layout
-       
+
         # Pack or grid depending on parent
-        utils.auto_pack(self, master, grid, align)
+        utils.auto_pack(self, master, grid, align, pack)

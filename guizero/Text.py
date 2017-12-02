@@ -1,10 +1,10 @@
 from tkinter import Label, StringVar
 
 from . import utilities as utils
-    
+
 class Text(Label):
 
-    def __init__(self, master, text="", size=12, color="black", font="Helvetica", grid=None, align=None):
+    def __init__(self, master, text="", size=12, color="black", font="Helvetica", grid=None, align=None, pack=None):
 
         # Description of this object (for friendly error messages)
         self.description = "[Text] object with text \"" + str(text) + "\""
@@ -23,18 +23,18 @@ class Text(Label):
             utils.error_format( self.description + "\n" +
             "The first argument was a " + str(type(master)) +". First argument must be [App] or [Box]")
 
-        # Initial config on setup       
+        # Initial config on setup
         self.config(fg=color, font=(font, size))
 
         # Pack or grid depending on parent
-        utils.auto_pack(self, master, grid, align)
+        utils.auto_pack(self, master, grid, align, pack)
 
 
     # Clear text (set to empty string)
     def clear(self):
         self.text = ""
         self.config(text="")
-        
+
     # Returns the text
     def get(self):
         return self.text
@@ -49,7 +49,7 @@ class Text(Label):
     def color(self, color):
         self.config(fg=color)
 
-    # Set the font 
+    # Set the font
     def font_face(self, font):
         self.current_font = font
         self.config(font=(self.current_font, self.current_size))
@@ -65,4 +65,3 @@ class Text(Label):
         self.text = new_text
         self.config(text=new_text)
         self.description = "[Text] object with text \"" + new_text + "\""
-

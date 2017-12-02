@@ -11,12 +11,12 @@ from . import utilities as utils
 
 class Picture(Label):
 
-    def __init__(self, master, image, grid=None, align=None):
+    def __init__(self, master, image, grid=None, align=None, pack=None):
 
 
         try:
-            img = PhotoImage(file=image)  
-            self.image = img  
+            img = PhotoImage(file=image)
+            self.image = img
 
             # Description of this object (for friendly error messages)
             self.description = "[Picture] object \"" + str(self.image) + "\""
@@ -27,27 +27,24 @@ class Picture(Label):
             except AttributeError:
                 utils.error_format(self.description + "\n" +
                 "The first argument was a " + str(type(master)) +". First argument must be [App] or [Box]")
-                
 
-            # Initial config on setup       
+
+            # Initial config on setup
             self.config(image=self.image)
-            
+
             # Pack or grid depending on parent
-            utils.auto_pack(self, master, grid, align)                    
+            utils.auto_pack(self, master, grid, align, pack)                    
         except:
             utils.error_format("Image import error - image must be a GIF, check correct path")
 
-        
+
 
 
     # Sets the image to something new
     def set(self, image):
         try:
-            img = PhotoImage(file=image) 
-            self.image = img  
-            self.config(image=self.image)              
+            img = PhotoImage(file=image)
+            self.image = img
+            self.config(image=self.image)
         except:
             utils.error_format("Image import error - image must be a GIF, check correct path")
-        
-
-   
