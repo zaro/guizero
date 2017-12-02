@@ -1,6 +1,7 @@
+import re
 # Auto pack or grid position the element
 # INTERNAL ONLY
-def auto_pack(self, master, grid, align): 
+def auto_pack(self, master, grid, align):
 
     #print("Master is " + str(type(master)) + " for object " + self.description)
     #print("Grid is " + str(grid))
@@ -11,14 +12,14 @@ def auto_pack(self, master, grid, align):
     else:
 
         # If they failed to specify grid coords
-        if grid is None:            
+        if grid is None:
             error_format("Missing grid reference for " + self.description + ".\n" +
-            "Please add a grid reference to make this object appear.")            
+            "Please add a grid reference to make this object appear.")
 
         # They didn't specify 2 coords
         elif len(grid) != 2:
             error_msg = self.description + " has no grid position argument.\n"
-            error_msg += "This widget will not be displayed!\n" 
+            error_msg += "This widget will not be displayed!\n"
             error_msg += "Should be: List of two grid coordinates [row, column]"
             error_format(error_msg)
         else:
@@ -27,22 +28,25 @@ def auto_pack(self, master, grid, align):
             if align is None:
                 self.grid(row=grid[0], column=grid[1])
             else:
-                # Conversion to child friendly specifications (diags?)
-                directions = {"top": "N", "bottom": "S", "left": "W", "right": "E"}
-                align_this = "W" # Default to align left if they didn't specify something valid
+                if not re.match(r'^[NWES]+$', align.upper()):
+                    # Conversion to child friendly specifications (diags?)
+                    directions = {"top": "N", "bottom": "S", "left": "W", "right": "E"}
+                    align_this =  "W" # Default to align left if they didn't specify something valid
 
-                try:
-                    align_this = directions[align]
-                except KeyError:                               
-                    error_msg = "Invalid align value ('"+ str(align) +"') for " + self.description + "\nShould be: top, bottom, left, right"
-                    error_format(error_msg)
-                    
+                    try:
+                        align_this = directions[align]
+                    except KeyError:
+                        error_msg = "Invalid align value ('"+ str(align) +"') for " + self.description + "\nShould be: top, bottom, left, right"
+                        error_format(error_msg)
+                else:
+                    align_this = align.upper()
+
 
                 # Place on grid
                 self.grid(row=grid[0], column=grid[1], sticky=align_this)
                 print("Packed component" + self.description)
 
-            
+
 
 
 # Lambda-izer for making it easy to pass arguments with function calls
